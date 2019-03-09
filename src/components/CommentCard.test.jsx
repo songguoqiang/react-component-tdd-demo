@@ -21,6 +21,19 @@ describe("Comment Card", () => {
     expect(authorTagNode).toBeDefined();
   });
 
+  test("should throw error when comment is not a string", () => {
+    // Arrange
+    const propsWithWrongCommentType = {
+      comment: true,
+      author: "Luke Ghenco"
+    };
+
+    // Act
+    expect(() =>
+      render(<CommentCard {...propsWithWrongCommentType} />)
+    ).toThrowError();
+  });
+
   test("should throw error when author is not a string", () => {
     // Arrange
     const propsWithWrongAuthorType = {
