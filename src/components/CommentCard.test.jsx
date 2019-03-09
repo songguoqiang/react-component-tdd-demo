@@ -33,4 +33,16 @@ describe("Comment Card", () => {
       render(<CommentCard {...propsWithWrongAuthorType} />)
     ).toThrowError();
   });
+
+  test("should throw error when author is not given", () => {
+    // Arrange
+    const propsWithoutAuthor = {
+      comment: "React Testing Library is great"
+    };
+
+    // Act
+    expect(() =>
+      render(<CommentCard {...propsWithoutAuthor} />)
+    ).toThrowError();
+  });
 });
