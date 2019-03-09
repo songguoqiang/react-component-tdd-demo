@@ -20,4 +20,17 @@ describe("Comment Card", () => {
     expect(commentNode).toBeDefined();
     expect(authorTagNode).toBeDefined();
   });
+
+  test("should throw error when author is not a string", () => {
+    // Arrange
+    const propsWithWrongAuthorType = {
+      comment: "React Testing Library is great",
+      author: true
+    };
+
+    // Act
+    expect(() =>
+      render(<CommentCard {...propsWithWrongAuthorType} />)
+    ).toThrowError();
+  });
 });
