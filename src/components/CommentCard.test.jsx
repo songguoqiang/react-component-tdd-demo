@@ -34,6 +34,18 @@ describe("Comment Card", () => {
     ).toThrowError();
   });
 
+  test("should throw error when comment is not given", () => {
+    // Arrange
+    const propsWithoutComment = {
+      author: "Luke Ghenco"
+    };
+
+    // Act
+    expect(() =>
+      render(<CommentCard {...propsWithoutComment} />)
+    ).toThrowError();
+  });
+
   test("should throw error when author is not a string", () => {
     // Arrange
     const propsWithWrongAuthorType = {
