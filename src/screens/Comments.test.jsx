@@ -1,25 +1,21 @@
 import React from "react";
-import { render, fireEvent, wait, cleanup } from "react-testing-library";
-import axios from "axios";
+import { render, fireEvent, wait } from "react-testing-library";
+import { mockAxios } from "../testHelper";
+
 import Comments from "./Comments";
 import { comments } from "../testData";
 
-describe("Comments Screen", () => {
-  let originalGet;
-  beforeEach(() => {
-    originalGet = axios.get;
-    axios.get = jest.fn(() => Promise.resolve(comments));
-  });
+afterAll(() => {
+  mockAxios.restore();
+});
 
-  afterEach(() => {
-    axios.get = originalGet;
-  });
+describe("Comments Screen", () => {
+  const comment1 = comments[0];
+  const comment2 = comments[1];
 
   test("It fetches comments and renders them to the page", async () => {
-
     // Arrange
-    const comment1 = comments[0];
-    const comment2 = comments[1];
+    mockAxios.onGet("/api/comments").reply(200, comments);
 
     // Act
     const { getByText } = render(<Comments />);
@@ -35,5 +31,37 @@ describe("Comments Screen", () => {
     expect(firstAuthorTagNode).toBeDefined();
     expect(secondCommentNode).toBeDefined();
     expect(secondAuthorTagNode).toBeDefined();
+  });
+
+  test("it creates a new comment, renders it and clears out form upon submission", async () => {
+    // Arrange
+    const newComment = {
+      id: 3,
+      comment: "Brave new world of testing",
+      author: "Spongebob"
+    };
+
+    mockAxios.onPost("/api/comments").reply(200, newComment);
+
+    // Act
+    const { getByLabelText, getByPlaceholderText, getByText } = render(
+      <Comments />
+    );
+    await wait(() => getByText(comment1.comment));
+    const submitButton = getByText("Add Comment");
+    const commentTextfieldNode = getByPlaceholderText("Write something...");
+    const nameFieldNode = getByLabelText("Your Name");
+
+    fireEvent.change(commentTextfieldNode, {
+      target: { value: newComment.comment }
+    });
+    fireEvent.change(nameFieldNode, { target: { value: newComment.author } });
+    fireEvent.click(submitButton);
+
+    await wait(() => getByText(`- ${newComment.author}`));
+
+    // Assert
+    expect(commentTextfieldNode.value).toEqual("");
+    expect(nameFieldNode.value).toEqual("");
   });
 });
