@@ -1,7 +1,7 @@
 import React from "react";
 import { render } from "react-testing-library";
 import CommentList from "./CommentList";
-import { expectPropTypeCheckToFail } from "./testHelper";
+import { expectPropTypeCheckToFail } from "../testHelper";
 
 describe("Comment List", () => {
   test("It renders a list of comment cards with their comment and author tag", () => {

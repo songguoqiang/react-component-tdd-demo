@@ -1,7 +1,7 @@
 import React from "react";
 import { render } from "react-testing-library";
 import CommentCard from "./CommentCard";
-import { expectPropTypeCheckToFail } from "./testHelper";
+import { expectPropTypeCheckToFail } from "../testHelper";
 
 describe("Comment Card", () => {
   test("should render the comment and the author", () => {
