@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import axios from "axios";
 
 const styles = {
   form: {
@@ -26,10 +27,11 @@ const styles = {
 };
 
 export default class CommentForm extends Component {
-  state = {
+  initialState = {
     comment: "",
     author: ""
   };
+  state = this.initialState;
 
   handleOnChange = ({ target: { name, value } }) =>
     this.setState(_prevState => ({
@@ -44,11 +46,33 @@ export default class CommentForm extends Component {
     return true;
   };
 
+  clearForm = () => this.setState(_prevState => this.initialState);
+
+  handleOnSubmit = event => {
+    event.preventDefault();
+    const newComment = this.state;
+    this.createComment(newComment);
+  };
+
+  createComment = newComment => {
+    axios
+      .post("/api/comments", { newComment })
+      .then(response => {
+        this.props.addComment(response.data);
+        this.clearForm();
+      })
+      .catch(console.error);
+  };
+
   render() {
     const { comment, author } = this.state;
     const isDisabled = this.hasInvalidFields() ? true : null;
     return (
-      <form data-testid="comment-form" style={styles.form}>
+      <form
+        onSubmit={this.handleOnSubmit}
+        data-testid="comment-form"
+        style={styles.form}
+      >
         <div>
           <textarea
             placeholder="Write something..."
