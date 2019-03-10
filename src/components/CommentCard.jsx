@@ -3,7 +3,8 @@ import PropTypes from "prop-types";
 
 const styles = {
   card: {
-    margin: "24px",
+    margin: "20px auto",
+    width: "500px",
     padding: "2px 24px",
     fontFamily: "Palatino",
     fontStyle: "italic",
