@@ -3,7 +3,7 @@ import React, { Component } from "react";
 export default class CommentForm extends Component {
   render() {
     return (
-      <form>
+      <form data-testid="comment-form">
         <div>
           <textarea placeholder="Write something..." name="comment" />
         </div>
@@ -13,7 +13,7 @@ export default class CommentForm extends Component {
           </label>
           <input id="author" type="text" name="author" />
         </div>
-        <button>Add Comment</button>
+        <button disabled>Add Comment</button>
       </form>
     );
   }

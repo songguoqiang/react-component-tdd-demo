@@ -17,5 +17,12 @@ describe("Comment Form", () => {
     expect(commentTextfieldNode).toBeDefined();
     expect(nameFieldNode).toBeDefined();
     expect(submitButton).toBeDefined();
+
+    const form = document.querySelector('[data-testid="comment-form"]');
+    expect(form).toHaveFormValues({
+      author: "",
+      comment: ""
+    });
+    expect(submitButton).toBeDisabled();
   });
 });
