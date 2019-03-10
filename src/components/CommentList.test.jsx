@@ -1,6 +1,7 @@
 import React from "react";
 import { render } from "react-testing-library";
 import CommentList from "./CommentList";
+import { expectPropTypeCheckToFail } from "./testHelper";
 
 describe("Comment List", () => {
   test("It renders a list of comment cards with their comment and author tag", () => {
@@ -20,7 +21,7 @@ describe("Comment List", () => {
     };
 
     // Act
-    const { getByText } = render(<CommentList {...props} />);
+    const { getByText } = renderCommentList(props);
 
     // Assert
     const firstCommentNode = getByText(comment1.comment);
@@ -33,15 +34,25 @@ describe("Comment List", () => {
     expect(secondAuthorTagNode).toBeDefined();
   });
 
-  test("it throws error if the comments prop is not an array", () => {
+  test("the comments prop should be an array", () => {
     // Arrange
     const props = {
       comments: true
     };
 
     // Act, Assert
-    expect(() => render(<CommentList {...props} />)).toThrowError(
-      /Failed prop type/
-    );
+    expectPropTypeCheckToFail(() => renderCommentList(props));
+  });
+
+  test("the comments prop must be provided", () => {
+    // Arrange
+    const props = {};
+
+    // Act, Assert
+    expectPropTypeCheckToFail(() => renderCommentList(props));
   });
 });
+
+function renderCommentList(props) {
+  return render(<CommentList {...props} />);
+}
