@@ -1,6 +1,7 @@
 import React from "react";
 import { render } from "react-testing-library";
 import CommentCard from "./CommentCard";
+import { expectPropTypeCheckToFail } from "./testHelper";
 
 describe("Comment Card", () => {
   test("should render the comment and the author", () => {
@@ -21,7 +22,7 @@ describe("Comment Card", () => {
     expect(authorTagNode).toBeDefined();
   });
 
-  test("should throw error when comment is not a string", () => {
+  test("comment prop should be a string", () => {
     // Arrange
     const propsWithWrongCommentType = {
       comment: true,
@@ -29,24 +30,24 @@ describe("Comment Card", () => {
     };
 
     // Act
-    expect(() =>
+    expectPropTypeCheckToFail(() =>
       render(<CommentCard {...propsWithWrongCommentType} />)
-    ).toThrowError();
+    );
   });
 
-  test("should throw error when comment is not given", () => {
+  test("comment prop is required", () => {
     // Arrange
     const propsWithoutComment = {
       author: "Luke Ghenco"
     };
 
     // Act
-    expect(() =>
+    expectPropTypeCheckToFail(() =>
       render(<CommentCard {...propsWithoutComment} />)
-    ).toThrowError();
+    );
   });
 
-  test("should throw error when author is not a string", () => {
+  test("author prop should be string", () => {
     // Arrange
     const propsWithWrongAuthorType = {
       comment: "React Testing Library is great",
@@ -54,20 +55,20 @@ describe("Comment Card", () => {
     };
 
     // Act
-    expect(() =>
+    expectPropTypeCheckToFail(() =>
       render(<CommentCard {...propsWithWrongAuthorType} />)
-    ).toThrowError();
+    );
   });
 
-  test("should throw error when author is not given", () => {
+  test("author props is required", () => {
     // Arrange
     const propsWithoutAuthor = {
       comment: "React Testing Library is great"
     };
 
     // Act
-    expect(() =>
+    expectPropTypeCheckToFail(() =>
       render(<CommentCard {...propsWithoutAuthor} />)
-    ).toThrowError();
+    );
   });
 });
