@@ -32,4 +32,16 @@ describe("Comment List", () => {
     expect(secondCommentNode).toBeDefined();
     expect(secondAuthorTagNode).toBeDefined();
   });
+
+  test("it throws error if the comments prop is not an array", () => {
+    // Arrange
+    const props = {
+      comments: true
+    };
+
+    // Act, Assert
+    expect(() => render(<CommentList {...props} />)).toThrowError(
+      /Failed prop type/
+    );
+  });
 });
