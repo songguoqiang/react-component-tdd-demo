@@ -38,5 +38,12 @@
     "jest-dom": "^3.1.2",
     "jest-prop-type-error": "^1.1.0",
     "react-testing-library": "^6.0.0"
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "src/**/*.{js,jsx}",
+      "!src/**/*.stories.jsx",
+      "!<rootDir>/node_modules/"
+    ]
   }
 }
