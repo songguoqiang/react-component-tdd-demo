@@ -5,6 +5,10 @@
 /.pnp
 .pnp.js
 
+# cpress report
+cypress/videos
+cypress/screenshots
+
 # testing
 /coverage
 
